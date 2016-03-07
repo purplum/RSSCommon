@@ -13,6 +13,7 @@ import org.dom4j.io.SAXReader;
 
 import com.sf.beans.News;
 import com.sf.beans.Outline;
+import com.sf.beans.TuguaItem;
 
 public class Dom4jXmlParser {
 
@@ -22,7 +23,7 @@ public class Dom4jXmlParser {
 
 		// 加载XML到内存解析并得到Document对象
 		SAXReader reader = new SAXReader();
-//		reader.setEncoding("utf-16");
+		// reader.setEncoding("utf-16");
 		Document document = reader.read(url);
 
 		// 获取根节点
@@ -61,6 +62,61 @@ public class Dom4jXmlParser {
 		}
 
 		return map_Channels;
+	}
+
+	public static ArrayList<TuguaItem> getTuguaLinkAsXmlData(URL url)
+			throws Exception {
+		ArrayList<TuguaItem> itemlist = new ArrayList<TuguaItem>();
+
+		SAXReader reader = new SAXReader();
+		Document document = reader.read(url);
+
+		Element root = document.getRootElement();
+
+		List<Element> ele_items = root.element("channel").elements("item");
+		Iterator<Element> iterator_items = ele_items.iterator();
+		while (iterator_items.hasNext()) {
+			Element ele_item = iterator_items.next();
+			String itemName = ele_item.elementText("title");
+			String description = ele_item.elementText("description");
+			String pubdate = ele_item.elementText("pubDate");
+			String link = ele_item.elementText("link");
+
+			TuguaItem item = new TuguaItem();
+			item.setTitle(itemName);
+			item.setDescription(description.substring(0, 600));
+			item.setPubdate(pubdate);
+			item.setLink(link);
+			item.setPicLink(buildPicURL(description));
+
+			itemlist.add(item);
+		}
+
+		return itemlist;
+	}
+
+	private static String buildPicURL(String description) {
+		String picurl = "";
+
+		String starttag = "img src=";
+		String endtag = ".jpg";
+
+		if (description.contains(starttag)) {
+			int startindex = description.indexOf(starttag);
+			int endindex = description.indexOf(endtag);
+			picurl = description.substring(startindex + starttag.length() + 1,
+					endindex);
+		}
+
+		return picurl + endtag;
+	}
+
+	public static void main(String[] args) {
+
+		String description = "img src=\"http://pic.yupoo.com/dapenti/Fn6HQPGq/3HGk5.jpg\"  <p> <a hre";
+
+		String finalstr = buildPicURL(description);
+		System.out.println(finalstr);
 	}
 
 	// 根据URL解析单个子频道内的XML新闻数据

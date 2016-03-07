@@ -1,0 +1,46 @@
+<project name="RSSCommon" basedir="." default="runrss">
+
+	<property name="src.dir" value="src" />
+
+	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+
+	<property name="rssmain-class" value="com.sf.common.RssCommonTest" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="rssjar" depends="compile">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${rssmain-class}" />
+				<attribute name="Class-path" value="${lib.dir}/dom4j-1.6.1.jar ${lib.dir}/log4j-1.2.15.jar ${lib.dir}/mysql-5.1.16.jar" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="runrssjar" depends="rssjar">
+		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true" />
+	</target>
+
+	<target name="clean-build" depends="clean" />
+
+	<target name="runrss" depends="clean,runrssjar" />
+
+</project>
