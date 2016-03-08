@@ -52,7 +52,7 @@ public class RssCommonTest {
 		HtmlGenerator hg = new HtmlGenerator();
 		String htmlname = hg.generateHtml(title, itemcontent, "");
 		
-		return "http://120.25.232.93/items/tugua/"+htmlname;
+		return "http://www.ayin.linkpc.net/items/tugua/"+htmlname;
 	}
 
 	// public void scanRssSources() {
