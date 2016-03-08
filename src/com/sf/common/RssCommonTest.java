@@ -34,7 +34,7 @@ public class RssCommonTest {
 
 				String title = item.getTitle().trim();
 				String content = item.getDescription();
-				insertIntoDB(title, item.getDescription()
+				insertIntoDB(title, content
 						.trim(), item.getPubdate().trim(), generateItemLink(title,content),
 						"TuGua", "'" + item.getPicLink() + "'");
 //				insertIntoDB(title, item.getDescription()
