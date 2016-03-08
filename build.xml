@@ -30,7 +30,7 @@
 		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="${rssmain-class}" />
-				<attribute name="Class-path" value="${lib.dir}/dom4j-1.6.1.jar ${lib.dir}/log4j-1.2.15.jar ${lib.dir}/mysql-5.1.16.jar" />
+				<attribute name="Class-path" value="${lib.dir}/dom4j-1.6.1.jar ${lib.dir}/log4j-1.2.15.jar ${lib.dir}/mysql-5.1.16.jar ${lib.dir}/freemarker.jar" />
 			</manifest>
 		</jar>
 	</target>

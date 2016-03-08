@@ -84,7 +84,7 @@ public class Dom4jXmlParser {
 
 			TuguaItem item = new TuguaItem();
 			item.setTitle(itemName);
-			item.setDescription(description.substring(0, 600));
+			item.setDescription(description);
 			item.setPubdate(pubdate);
 			item.setLink(link);
 			item.setPicLink(buildPicURL(description));

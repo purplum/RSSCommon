@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.sf.beans.TuguaItem;
+import com.sf.html.HtmlGenerator;
 import com.sf.utils.DatabaseUtils;
 import com.sf.utils.Dom4jXmlParser;
 import com.sf.utils.PublicUtils;
@@ -31,14 +32,27 @@ public class RssCommonTest {
 					.getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl("tugua")));
 			for (TuguaItem item : itemlist) {
 
-				insertIntoDB(item.getTitle().trim(), item.getDescription()
-						.trim(), item.getPubdate().trim(), item.getLink()
-						.trim(), "TuGua", "'" + item.getPicLink() + "'");
+				String title = item.getTitle().trim();
+				String content = item.getDescription();
+				insertIntoDB(title, item.getDescription()
+						.trim(), item.getPubdate().trim(), generateItemLink(title,content),
+						"TuGua", "'" + item.getPicLink() + "'");
+//				insertIntoDB(title, item.getDescription()
+//						.trim(), item.getPubdate().trim(), item.getLink()
+//						.trim(), "TuGua", "'" + item.getPicLink() + "'");
 				// break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private String generateItemLink(String title,String itemcontent) {
+		
+		HtmlGenerator hg = new HtmlGenerator();
+		String htmlname = hg.generateHtml(title, itemcontent, "");
+		
+		return "http://120.25.232.93/items/tugua/"+htmlname;
 	}
 
 	// public void scanRssSources() {
