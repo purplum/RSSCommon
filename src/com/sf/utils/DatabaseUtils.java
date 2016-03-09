@@ -129,7 +129,7 @@ public class DatabaseUtils {
 		String sql = "insert into "
 				+ contentTable
 				+ " (Category, Title, Description, Date, Link, FeedID, picLink) "
-				+ "VALUES ('" + category + "','" + Title + "','" + Description.substring(0, 500)
+				+ "VALUES ('" + category + "','" + Title + "','" + Description.substring(0, 200)
 				+ "', " + "'" + Date + "', '" + Link + "','1'," + picLink + ")";
 
 		try {
