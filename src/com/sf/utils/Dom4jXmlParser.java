@@ -69,8 +69,18 @@ public class Dom4jXmlParser {
 		ArrayList<TuguaItem> itemlist = new ArrayList<TuguaItem>();
 
 		SAXReader reader = new SAXReader();
-		Document document = reader.read(url);
+		
+		Document document = null;
+		try {
+			document = reader.read(url);
+		} catch (Exception e) {
+			// TODO: handle exception
+			document = reader.read(url);
+		}
 
+		if(document==null) {
+			return itemlist;
+		}
 		Element root = document.getRootElement();
 
 		List<Element> ele_items = root.element("channel").elements("item");
