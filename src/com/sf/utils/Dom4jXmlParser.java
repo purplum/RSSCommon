@@ -80,8 +80,10 @@ public class Dom4jXmlParser {
 			Thread.sleep(3000);
 		}
 		if (document == null) {
+			System.out.println("### Cannot resolve url, abort.. ###");
 			return itemlist;
 		}
+		System.out.println("### Start operate xml response.. ###");
 		Element root = document.getRootElement();
 
 		List<Element> ele_items = root.element("channel").elements("item");
