@@ -41,6 +41,8 @@
 
 	<target name="clean-build" depends="clean" />
 
-	<target name="runrss" depends="clean,runrssjar" />
+	<target name="runrss" depends="clean,runrssjar">
+		<echo message="### Finish execute rss jar.. ###" />
+	</target>
 
 </project>
