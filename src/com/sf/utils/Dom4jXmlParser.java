@@ -69,16 +69,17 @@ public class Dom4jXmlParser {
 		ArrayList<TuguaItem> itemlist = new ArrayList<TuguaItem>();
 
 		SAXReader reader = new SAXReader();
-		
-		Document document = null;
-		try {
-			document = reader.read(url);
-		} catch (Exception e) {
-			// TODO: handle exception
-			document = reader.read(url);
-		}
 
-		if(document==null) {
+		Document document = null;
+		document = reader.read(url);
+
+		int circle = 5;
+		while (circle-- > 0 && document == null) {
+			System.out.println("### Cannot resolve url, try again.. ###");
+			document = reader.read(url);
+			Thread.sleep(3000);
+		}
+		if (document == null) {
 			return itemlist;
 		}
 		Element root = document.getRootElement();
