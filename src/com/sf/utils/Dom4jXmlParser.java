@@ -91,13 +91,13 @@ public class Dom4jXmlParser {
 		while (iterator_items.hasNext()) {
 			Element ele_item = iterator_items.next();
 			String itemName = ele_item.elementText("title");
-			String description = ele_item.elementText("description").substring(0, 20);
+			String description = ele_item.elementText("description");
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
 
 			CommonRSSItem item = new CommonRSSItem();
 			item.setTitle(itemName);
-			item.setDescription(description);
+			item.setDescription(description.substring(0, 100));
 			item.setPubdate(pubdate);
 			item.setLink(link);
 			item.setPicLink(buildPicURL(description));
