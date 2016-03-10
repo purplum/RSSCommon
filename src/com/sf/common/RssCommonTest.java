@@ -17,8 +17,10 @@ public class RssCommonTest {
 	
 	private final static String TuguaCategory = "Tugua";
 	private final static String ZhihuCategory = "Zhihu";
+	private final static String MacCategory = "MacStory";
 	private final static int TuguaFeed = 1;
 	private final static int ZhihuFeed = 2;
+	private final static int MacStoryFeed = 3;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -30,6 +32,7 @@ public class RssCommonTest {
 
 		rssTest.scanCommonRssSources(TuguaCategory,TuguaFeed);
 		rssTest.scanCommonRssSources(ZhihuCategory,ZhihuFeed);
+		rssTest.scanCommonRssSources(MacCategory,MacStoryFeed);
 	}
 
 	public void scanCommonRssSources(String categoryname,int feedid) {
