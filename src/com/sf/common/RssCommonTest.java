@@ -98,9 +98,12 @@ public class RssCommonTest {
 
 		System.out.println("### Start Insert into db..["+Title+"] ###");
 		DatabaseUtils dbutil = new DatabaseUtils();
+		String sql = dbutil.buildUpdateSql(Title, Description, Date,
+				Link, category, picLink, feedid);
+		
+		System.out.println("### SQL IS: ["+sql+"] ###");
 		try {
-			dbutil.insertSql(dbutil.buildUpdateSql(Title, Description, Date,
-					Link, category, picLink, feedid));
+			dbutil.insertSql(sql);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

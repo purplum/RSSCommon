@@ -94,17 +94,17 @@ public class Dom4jXmlParser {
 			String description = ele_item.elementText("description");
 			if(description==null) {
 				System.out.println("### Description node null, turn to content node.. ###");
-				description = ele_item.elementText("content:encoded");
+				description = ele_item.elementText("content");
 			}
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
 
 			CommonRSSItem item = new CommonRSSItem();
 			item.setTitle(itemName);
-			item.setDescription(description.substring(0, 100));
+			item.setDescription(description==null?"":description.substring(0, 100));
 			item.setPubdate(pubdate);
 			item.setLink(link);
-			item.setPicLink(buildPicURL(description));
+			item.setPicLink(buildPicURL(description==null?"":description));
 
 			itemlist.add(item);
 		}
