@@ -117,6 +117,12 @@ public class DatabaseUtils {
 	public String buildUpdateSql(String Title, String Description, String Date,
 			String Link, String category, String picLink,int feedid) {
 
+		if(Title.contains("'")) {
+			Title = Title.replaceAll("'", "''");
+		}
+		if(Description.contains("'")) {
+			Description = Description.replaceAll("'", "''");
+		}
 		String sql = "insert into "
 				+ contentTable
 				+ " (Category, Title, Description, Date, Link, FeedID, picLink) "
