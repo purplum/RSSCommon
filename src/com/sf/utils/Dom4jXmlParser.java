@@ -91,7 +91,7 @@ public class Dom4jXmlParser {
 		while (iterator_items.hasNext()) {
 			Element ele_item = iterator_items.next();
 			String itemName = ele_item.elementText("title");
-			String description = ele_item.elementText("description");
+			String description = ele_item.elementText("description").substring(0, 20);
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
 
