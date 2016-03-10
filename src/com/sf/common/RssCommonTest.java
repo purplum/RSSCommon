@@ -90,6 +90,7 @@ public class RssCommonTest {
 	public void insertIntoDB(String Title, String Description, String Date,
 			String Link, String category, String picLink, int feedid) {
 
+		System.out.println("### Start Insert into db..["+Title+"] ###");
 		DatabaseUtils dbutil = new DatabaseUtils();
 		try {
 			dbutil.insertSql(dbutil.buildUpdateSql(Title, Description, Date,
