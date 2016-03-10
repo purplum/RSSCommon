@@ -97,6 +97,7 @@ public class RssCommonTest {
 					Link, category, picLink, feedid));
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		dbutil.closeCon();
