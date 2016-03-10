@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.sf.beans.TuguaItem;
+import com.sf.beans.CommonRSSItem;
 import com.sf.html.HtmlGenerator;
 import com.sf.utils.DatabaseUtils;
 import com.sf.utils.Dom4jXmlParser;
@@ -14,117 +14,85 @@ import com.sf.utils.PublicUtils;
 public class RssCommonTest {
 
 	private Logger logger = Logger.getLogger(getClass());
+	
+	private final static String TuguaCategory = "Tugua";
+	private final static String ZhihuCategory = "Zhihu";
+	private final static int TuguaFeed = 1;
+	private final static int ZhihuFeed = 2;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-//		System.setProperty("http.proxyHost", "proxy");
-//		System.setProperty("http.proxyPort", "8080");
+		// System.setProperty("http.proxyHost", "proxy");
+		// System.setProperty("http.proxyPort", "8080");
 
 		RssCommonTest rssTest = new RssCommonTest();
-		rssTest.scanTuguaRssSources();
+
+		rssTest.scanCommonRssSources(TuguaCategory,TuguaFeed);
+		rssTest.scanCommonRssSources(ZhihuCategory,ZhihuFeed);
 	}
 
-	public void scanTuguaRssSources() {
+	public void scanCommonRssSources(String categoryname,int feedid) {
 
 		try {
-			ArrayList<TuguaItem> itemlist = Dom4jXmlParser
-					.getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl("tugua")));
-			for (TuguaItem item : itemlist) {
+			ArrayList<CommonRSSItem> itemlist = Dom4jXmlParser
+					.getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl(categoryname.toLowerCase())));
+			for (CommonRSSItem item : itemlist) {
 
 				String title = item.getTitle().trim();
 				String content = item.getDescription();
-				insertIntoDB(title, content
-						.trim(), item.getPubdate().trim(), item.getLink(),
-						"TuGua", "'" + item.getPicLink() + "'");
-//				insertIntoDB(title, item.getDescription()
-//						.trim(), item.getPubdate().trim(), item.getLink()
-//						.trim(), "TuGua", "'" + item.getPicLink() + "'");
-				// break;
+				insertIntoDB(title, content.trim(), item.getPubdate().trim(),
+						item.getLink(), categoryname, "'" + item.getPicLink() + "'",
+						feedid);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private String generateItemLink(String title,String itemcontent) {
+	public void scanTuguaSource() {
 		
-		HtmlGenerator hg = new HtmlGenerator();
-		String htmlname = hg.generateHtml(title, itemcontent, "");
+		scanCommonRssSources("Tugua",1);
+	}
+	
+	public void scanZhihuSource() {
 		
-		return "http://www.ayin.linkpc.net/items/tugua/"+htmlname;
+		scanCommonRssSources("Zhihu",2);
 	}
 
-	// public void scanRssSources() {
+	// public void scanZhihuRssSources() {
 	//
 	// try {
-	// // 获取各个频道名称及子频道集合，并迭代
-	// Map<String, List<Outline>> map_Channels = Dom4jXmlParser
-	// .getLinkAsXmlData(new URL(PublicUtils.getUrl()));
-	// Iterator<Entry<String, List<Outline>>> iterator_Channels = map_Channels
-	// .entrySet().iterator();
-	// while (iterator_Channels.hasNext()) {
-	// // 一个频道
-	// Entry<String, List<Outline>> entry = iterator_Channels.next();
-	// String channelName = entry.getKey(); // 频道名称
-	// List<Outline> outlines = entry.getValue(); // 频道内子频道项目
+	// ArrayList<CommonRSSItem> itemlist = Dom4jXmlParser
+	// .getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl("zhihu")));
+	// for (CommonRSSItem item : itemlist) {
 	//
-	// logger.info("### Module name：[" + channelName + "] ###");
-	// if (!"体育频道-新浪RSS".equals(channelName)) {
-	// continue;
-	// }
-	//
-	// // 迭代子频道
-	// Iterator<Outline> iterator_Item = outlines.iterator();
-	// while (iterator_Item.hasNext()) {
-	// // 一个子频道
-	// int newsIndex = 0;
-	// Outline outline = iterator_Item.next();
-	// String outlinename = outline.getText();
-	// if (!outlinename.equals("国际足坛")) {
-	// continue;
-	// }
-	// logger.info("#### Outline" + outline.getText() + "："
-	// + outline.getXmlUrl() + " Contents : ####\n");
-	// URL url = new URL(outline.getXmlUrl());
-	// // 根据子频道的XMLURL获取新闻集合，并迭代
-	// List<News> list_News = Dom4jXmlParser.getNewsAsXmlData(url);
-	// Iterator<News> iterator_News = list_News.iterator();
-	// while (iterator_News.hasNext()) {
-	// // News
-	// News news = iterator_News.next();
-	// logger.info("##### News[" + (newsIndex++) + "]:");
-	// logger.info("# Title: " + news.getTitle().trim() + " #");
-	// logger.info("# Description: "
-	// + news.getDescription().trim() + " #");
-	// logger.info("# Date: " + news.getPubDate().trim()
-	// + " #");
-	// logger.info("# Link: " + news.getLink().trim() + " #");
-	// logger.info("# Category: " + news.getCategory().trim()
-	// + " #");
-	// logger.info("# Comments: " + news.getComments().trim()
-	// + " #");
-	// logger.info("##### News End ####\n");
-	//
-	// insertIntoDB(news.getTitle().trim(), news
-	// .getDescription().trim(), news.getPubDate()
-	// .trim(), news.getLink().trim(), news
-	// .getCategory().trim());
-	// }
-	// }
+	// String title = item.getTitle().trim();
+	// String content = item.getDescription();
+	// insertIntoDB(title, content.trim(), item.getPubdate().trim(),
+	// item.getLink(), "Zhihu", "'" + item.getPicLink() + "'",
+	// 2);
 	// }
 	// } catch (Exception e) {
 	// e.printStackTrace();
 	// }
 	// }
 
+	private String generateItemLink(String title, String itemcontent) {
+
+		HtmlGenerator hg = new HtmlGenerator();
+		String htmlname = hg.generateHtml(title, itemcontent, "");
+
+		return "http://www.ayin.linkpc.net/items/tugua/" + htmlname;
+	}
+
 	public void insertIntoDB(String Title, String Description, String Date,
-			String Link, String category, String picLink) {
+			String Link, String category, String picLink, int feedid) {
 
 		DatabaseUtils dbutil = new DatabaseUtils();
 		try {
 			dbutil.insertSql(dbutil.buildUpdateSql(Title, Description, Date,
-					Link, category, picLink));
+					Link, category, picLink, feedid));
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

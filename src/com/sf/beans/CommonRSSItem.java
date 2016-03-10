@@ -1,12 +1,17 @@
 package com.sf.beans;
 
-public class TuguaItem {
+public class CommonRSSItem {
 	
 	private String title = "";
 	private String description = "";
 	private String pubdate = "";
 	private String link = "";
 	private String picLink = "";
+	
+	public String toString() {
+		return "[Title] "+getTitle()+"\n"+
+				"[Description] "+getDescription()+"\n";
+	}
 	
 	public String getTitle() {
 		return title;

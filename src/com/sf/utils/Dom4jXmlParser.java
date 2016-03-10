@@ -13,7 +13,7 @@ import org.dom4j.io.SAXReader;
 
 import com.sf.beans.News;
 import com.sf.beans.Outline;
-import com.sf.beans.TuguaItem;
+import com.sf.beans.CommonRSSItem;
 
 public class Dom4jXmlParser {
 
@@ -64,9 +64,9 @@ public class Dom4jXmlParser {
 		return map_Channels;
 	}
 
-	public static ArrayList<TuguaItem> getTuguaLinkAsXmlData(URL url)
+	public static ArrayList<CommonRSSItem> getTuguaLinkAsXmlData(URL url)
 			throws Exception {
-		ArrayList<TuguaItem> itemlist = new ArrayList<TuguaItem>();
+		ArrayList<CommonRSSItem> itemlist = new ArrayList<CommonRSSItem>();
 
 		SAXReader reader = new SAXReader();
 
@@ -95,7 +95,7 @@ public class Dom4jXmlParser {
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
 
-			TuguaItem item = new TuguaItem();
+			CommonRSSItem item = new CommonRSSItem();
 			item.setTitle(itemName);
 			item.setDescription(description);
 			item.setPubdate(pubdate);
@@ -117,8 +117,16 @@ public class Dom4jXmlParser {
 		if (description.contains(starttag)) {
 			int startindex = description.indexOf(starttag);
 			int endindex = description.indexOf(endtag);
-			picurl = description.substring(startindex + starttag.length() + 1,
-					endindex);
+			if(startindex<0||endindex<0) {
+				return "";
+			}
+			else if(endindex<=startindex) {
+				return "";
+			}
+			else {
+				picurl = description.substring(startindex + starttag.length() + 1,
+						endindex);
+			}
 		}
 
 		return picurl + endtag;

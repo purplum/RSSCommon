@@ -114,23 +114,14 @@ public class DatabaseUtils {
 		return sql;
 	}
 
-	private String buildUpdateSql() {
-
-		String sql = "insert into rsscontent (Category, Title, Description, Date, Link, FeedID) "
-				+ "VALUES ('Common','test 2111','description 111', "
-				+ "'2016-03-10', 'http://sina.com','1')";
-
-		return sql;
-	}
-
 	public String buildUpdateSql(String Title, String Description, String Date,
-			String Link, String category, String picLink) {
+			String Link, String category, String picLink,int feedid) {
 
 		String sql = "insert into "
 				+ contentTable
 				+ " (Category, Title, Description, Date, Link, FeedID, picLink) "
 				+ "VALUES ('" + category + "','" + Title + "','" + Description.substring(0, 200)
-				+ "', " + "'" + Date + "', '" + Link + "','1'," + picLink + ")";
+				+ "', " + "'" + Date + "', '" + Link + "','"+feedid+"'," + picLink + ")";
 
 		try {
 			sql = new String(sql.getBytes("utf8"), "utf-8");
