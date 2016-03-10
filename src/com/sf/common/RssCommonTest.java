@@ -34,6 +34,7 @@ public class RssCommonTest {
 
 	public void scanCommonRssSources(String categoryname,int feedid) {
 
+		logger.info("### Start Common Rss scan... ###");
 		try {
 			ArrayList<CommonRSSItem> itemlist = Dom4jXmlParser
 					.getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl(categoryname.toLowerCase())));
