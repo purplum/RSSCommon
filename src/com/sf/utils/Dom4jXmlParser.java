@@ -64,7 +64,7 @@ public class Dom4jXmlParser {
 		return map_Channels;
 	}
 
-	public static ArrayList<CommonRSSItem> getTuguaLinkAsXmlData(URL url)
+	public static ArrayList<CommonRSSItem> getCommonLinkAsXmlData(URL url)
 			throws Exception {
 		ArrayList<CommonRSSItem> itemlist = new ArrayList<CommonRSSItem>();
 
@@ -92,6 +92,10 @@ public class Dom4jXmlParser {
 			Element ele_item = iterator_items.next();
 			String itemName = ele_item.elementText("title");
 			String description = ele_item.elementText("description");
+			if(description==null) {
+				System.out.println("### Description node null, turn to content node.. ###");
+				description = ele_item.elementText("content:encoded");
+			}
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
 
@@ -113,12 +117,23 @@ public class Dom4jXmlParser {
 
 		String starttag = "img src=";
 		String endtag = ".jpg";
+		String endtag2 = ".png";
 
 		if (description.contains(starttag)) {
 			int startindex = description.indexOf(starttag);
 			int endindex = description.indexOf(endtag);
-			if(startindex<0||endindex<0) {
+			int end2index = description.indexOf(endtag2);
+			if(startindex<0) {
 				return "";
+			}
+			else if(endindex<0) {
+				if(end2index<0) {
+					return "";
+				}
+				else {
+					picurl = description.substring(startindex + starttag.length() + 1,
+							end2index);
+				}
 			}
 			else if(endindex<=startindex) {
 				return "";

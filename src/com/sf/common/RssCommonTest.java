@@ -18,9 +18,11 @@ public class RssCommonTest {
 	private final static String TuguaCategory = "Tugua";
 	private final static String ZhihuCategory = "Zhihu";
 	private final static String MacCategory = "MacStory";
+	private final static String QuoraCategory = "Quora";
 	private final static int TuguaFeed = 1;
 	private final static int ZhihuFeed = 2;
 	private final static int MacStoryFeed = 3;
+	private final static int QuoraFeed = 4;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -33,6 +35,7 @@ public class RssCommonTest {
 		rssTest.scanCommonRssSources(TuguaCategory,TuguaFeed);
 		rssTest.scanCommonRssSources(ZhihuCategory,ZhihuFeed);
 		rssTest.scanCommonRssSources(MacCategory,MacStoryFeed);
+		rssTest.scanCommonRssSources(QuoraCategory,QuoraFeed);
 	}
 
 	public void scanCommonRssSources(String categoryname,int feedid) {
@@ -40,7 +43,7 @@ public class RssCommonTest {
 		logger.info("### Start Common Rss scan... ###");
 		try {
 			ArrayList<CommonRSSItem> itemlist = Dom4jXmlParser
-					.getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl(categoryname.toLowerCase())));
+					.getCommonLinkAsXmlData(new URL(PublicUtils.getUrl(categoryname.toLowerCase())));
 			for (CommonRSSItem item : itemlist) {
 
 				String title = item.getTitle().trim();
