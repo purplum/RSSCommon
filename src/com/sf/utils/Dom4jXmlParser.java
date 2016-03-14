@@ -72,6 +72,7 @@ public class Dom4jXmlParser {
 
 		Document document = null;
 		document = reader.read(url);
+		System.out.println("### Read out rss url contents. ###");
 
 		int circle = 5;
 		while (circle-- > 0 && document == null) {

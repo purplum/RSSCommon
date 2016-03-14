@@ -67,30 +67,12 @@ public class RssCommonTest {
 		scanCommonRssSources("Zhihu",2);
 	}
 
-	// public void scanZhihuRssSources() {
-	//
-	// try {
-	// ArrayList<CommonRSSItem> itemlist = Dom4jXmlParser
-	// .getTuguaLinkAsXmlData(new URL(PublicUtils.getUrl("zhihu")));
-	// for (CommonRSSItem item : itemlist) {
-	//
-	// String title = item.getTitle().trim();
-	// String content = item.getDescription();
-	// insertIntoDB(title, content.trim(), item.getPubdate().trim(),
-	// item.getLink(), "Zhihu", "'" + item.getPicLink() + "'",
-	// 2);
-	// }
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-
 	private String generateItemLink(String title, String itemcontent) {
 
 		HtmlGenerator hg = new HtmlGenerator();
 		String htmlname = hg.generateHtml(title, itemcontent, "");
 
-		return "http://www.ayin.linkpc.net/items/tugua/" + htmlname;
+		return "http://120.25.232.93/items/images/" + htmlname;
 	}
 
 	public void insertIntoDB(String Title, String Description, String Date,
@@ -99,7 +81,7 @@ public class RssCommonTest {
 		System.out.println("### Start Insert into db..["+Title+"] ###");
 		DatabaseUtils dbutil = new DatabaseUtils();
 		String sql = dbutil.buildUpdateSql(Title, Description, Date,
-				Link, category, picLink, feedid);
+				Link, category, dbutil.downloadPicture(picLink), feedid);
 		
 		System.out.println("### SQL IS: ["+sql+"] ###");
 		try {

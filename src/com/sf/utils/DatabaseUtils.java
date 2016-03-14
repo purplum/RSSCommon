@@ -1,13 +1,24 @@
 package com.sf.utils;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.apache.log4j.Logger;
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class DatabaseUtils {
 
@@ -19,6 +30,8 @@ public class DatabaseUtils {
 	private String DBSID = "autotest";
 	private String contentTable = "";
 	private final static String Encode = "utf-8";
+	
+	private final String ItemFolder = "/var/www/html/items/images/";
 
 	private Connection conn;
 
@@ -101,6 +114,10 @@ public class DatabaseUtils {
 		try {
 			rs = statement.executeUpdate(sql);
 			logger.info("### Finish Insert into db.. ###");
+		} catch (MySQLIntegrityConstraintViolationException e1) {
+			logger.info("##########################");
+			logger.info("### Duplicate entry... ###");
+			logger.info("##########################");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,19 +132,20 @@ public class DatabaseUtils {
 	}
 
 	public String buildUpdateSql(String Title, String Description, String Date,
-			String Link, String category, String picLink,int feedid) {
+			String Link, String category, String picLink, int feedid) {
 
-		if(Title.contains("'")) {
+		if (Title.contains("'")) {
 			Title = Title.replaceAll("'", "''");
 		}
-		if(Description.contains("'")) {
+		if (Description.contains("'")) {
 			Description = Description.replaceAll("'", "''");
 		}
 		String sql = "insert into "
 				+ contentTable
 				+ " (Category, Title, Description, Date, Link, FeedID, picLink) "
 				+ "VALUES ('" + category + "','" + Title + "','" + Description
-				+ "', " + "'" + Date + "', '" + Link + "','"+feedid+"'," + picLink + ")";
+				+ "', " + "'" + convertDate(Date) + "', '" + Link + "','"
+				+ feedid + "'," + picLink + ")";
 
 		try {
 			sql = new String(sql.getBytes("utf8"), "utf-8");
@@ -161,12 +179,76 @@ public class DatabaseUtils {
 		}
 	}
 
+	public String convertDate(String dateStr) {
+
+		int firstindex = dateStr.indexOf(" ");
+		int lastindex = dateStr.lastIndexOf(" ");
+
+		if (firstindex >= 0 && lastindex > 0) {
+			dateStr = dateStr.substring(firstindex + 1, lastindex);
+
+			SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
+			java.util.Date now;
+			try {
+				now = df.parse(dateStr);
+				System.out.println(now.getTime());
+				return String.valueOf(now.getTime());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return "0";
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		DatabaseUtils dbutil = new DatabaseUtils();
-		dbutil.testCon();
+		// dbutil.convertDate("");
+		// dbutil.insertSql("delete * from rsscontent");
+		// dbutil.testCon();
+		//
+		// dbutil.closeCon();
+	}
+	
+	private String getImageName(String urls) {
+		
+		int index = urls.lastIndexOf("/");
+		return urls.substring(index+1);
+	}
 
-		dbutil.closeCon();
+	public String downloadPicture(String urlString) {
+
+		urlString = urlString.replaceAll("'", "");
+		try {
+			URL url = new URL(URLDecoder.decode(urlString, "utf-8"));
+			
+			DataInputStream dataInputStream = new DataInputStream(
+					url.openStream());
+			String newImage = getImageName(urlString);
+			String imageName = ItemFolder + newImage;
+			FileOutputStream fileOutputStream = new FileOutputStream(new File(
+					imageName));
+
+			byte[] buffer = new byte[1024];
+			int length;
+
+			while ((length = dataInputStream.read(buffer)) > 0) {
+				fileOutputStream.write(buffer, 0, length);
+			}
+
+			dataInputStream.close();
+			fileOutputStream.close();
+			System.out.println("### Finish download image caches.. ###");
+			
+			return "http://120.25.232.93/items/images/" + newImage;
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 }
