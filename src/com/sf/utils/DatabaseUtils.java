@@ -180,6 +180,7 @@ public class DatabaseUtils {
 
 	public String convertDate(String dateStr) {
 
+		System.out.println("### Start convert date str: "+dateStr+" ###");
 		int firstindex = dateStr.indexOf(" ");
 		int lastindex = -1;
 		if(dateStr.contains("]]")) {
@@ -211,7 +212,7 @@ public class DatabaseUtils {
 		// TODO Auto-generated method stub
 
 		DatabaseUtils dbutil = new DatabaseUtils();
-		// dbutil.convertDate("");
+		 dbutil.convertDate("<![CDATA[Mon, 14 Mar 2016 20:17:36]]>");
 		// dbutil.insertSql("delete * from rsscontent");
 		// dbutil.testCon();
 		//
