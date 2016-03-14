@@ -114,7 +114,7 @@ public class DatabaseUtils {
 			logger.info("### Finish Insert into db.. ###");
 		}  catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("### sql exceptions' warning.. ###");
 		} catch (Exception e1) {
 			logger.info("##########################");
 			logger.info("### Duplicate entry... ###");
