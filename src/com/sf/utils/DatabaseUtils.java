@@ -201,7 +201,14 @@ public class DatabaseUtils {
 				return String.valueOf(now.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					now = df.parse(dateStr+" 00:00:00");
+					System.out.println(now.getTime());
+					return String.valueOf(now.getTime());
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		}
