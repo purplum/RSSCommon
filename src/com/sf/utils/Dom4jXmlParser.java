@@ -93,6 +93,7 @@ public class Dom4jXmlParser {
 			Element ele_item = iterator_items.next();
 			String itemName = ele_item.elementText("title");
 			String description = ele_item.elementText("description");
+			String image = ele_item.elementText("image");
 			if(description==null) {
 				System.out.println("### Description node null, turn to content node.. ###");
 				description = ele_item.elementText("content");
@@ -105,7 +106,7 @@ public class Dom4jXmlParser {
 			item.setDescription(description==null?"":description.substring(0, 100));
 			item.setPubdate(pubdate);
 			item.setLink(link);
-			item.setPicLink(buildPicURL(description==null?"":description));
+			item.setPicLink(image==null?(buildPicURL(description==null?"":description)):image);
 
 			itemlist.add(item);
 		}

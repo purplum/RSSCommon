@@ -19,10 +19,14 @@ public class RssCommonTest {
 	private final static String ZhihuCategory = "Zhihu";
 	private final static String MacCategory = "MacStory";
 	private final static String QuoraCategory = "Quora";
+	private final static String IFanCategory = "IFan";
+	private final static String ILifeCategory = "IdeaLife";
 	private final static int TuguaFeed = 1;
 	private final static int ZhihuFeed = 2;
 	private final static int MacStoryFeed = 3;
 	private final static int QuoraFeed = 4;
+	private final static int IFanFeed = 5;
+	private final static int ILifeFeed = 6;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -36,6 +40,8 @@ public class RssCommonTest {
 		rssTest.scanCommonRssSources(ZhihuCategory,ZhihuFeed);
 		rssTest.scanCommonRssSources(MacCategory,MacStoryFeed);
 		rssTest.scanCommonRssSources(QuoraCategory,QuoraFeed);
+		rssTest.scanCommonRssSources(IFanCategory,IFanFeed);
+		rssTest.scanCommonRssSources(ILifeCategory,ILifeFeed);
 	}
 
 	public void scanCommonRssSources(String categoryname,int feedid) {
