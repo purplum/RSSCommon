@@ -18,8 +18,6 @@ import java.text.SimpleDateFormat;
 
 import org.apache.log4j.Logger;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
 public class DatabaseUtils {
 
 	private Logger logger = Logger.getLogger(getClass());
@@ -114,13 +112,13 @@ public class DatabaseUtils {
 		try {
 			rs = statement.executeUpdate(sql);
 			logger.info("### Finish Insert into db.. ###");
-		} catch (MySQLIntegrityConstraintViolationException e1) {
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e1) {
 			logger.info("##########################");
 			logger.info("### Duplicate entry... ###");
 			logger.info("##########################");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
