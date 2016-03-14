@@ -241,7 +241,7 @@ public class DatabaseUtils {
 			fileOutputStream.close();
 			System.out.println("### Finish download image caches.. ###");
 			
-			return "http://120.25.232.93/items/images/" + newImage;
+			return "'http://120.25.232.93/items/images/" + newImage+"'";
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
