@@ -29,8 +29,8 @@ public class DatabaseUtils {
 	private String contentTable = "";
 	private final static String Encode = "utf-8";
 	
-	private final String ItemFolder = "template/";
-//	private final String ItemFolder = "/var/www/html/items/images/";
+//	private final String ItemFolder = "template/";
+	private final String ItemFolder = "/var/www/html/items/images/";
 
 	private Connection conn;
 
