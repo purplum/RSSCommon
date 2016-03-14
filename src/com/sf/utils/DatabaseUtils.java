@@ -219,33 +219,37 @@ public class DatabaseUtils {
 
 	public String downloadPicture(String urlString) {
 
-		urlString = urlString.replaceAll("'", "");
-		try {
-			URL url = new URL(URLDecoder.decode(urlString, "utf-8"));
-			
-			DataInputStream dataInputStream = new DataInputStream(
-					url.openStream());
-			String newImage = getImageName(urlString);
-			String imageName = ItemFolder + newImage;
-			FileOutputStream fileOutputStream = new FileOutputStream(new File(
-					imageName));
-
-			byte[] buffer = new byte[1024];
-			int length;
-
-			while ((length = dataInputStream.read(buffer)) > 0) {
-				fileOutputStream.write(buffer, 0, length);
+		if(urlString.contains("'")) {
+			urlString = urlString.replaceAll("'", "");
+			try {
+				URL url = new URL(URLDecoder.decode(urlString, "utf-8"));
+				
+				DataInputStream dataInputStream = new DataInputStream(
+						url.openStream());
+				String newImage = getImageName(urlString);
+				String imageName = ItemFolder + newImage;
+				FileOutputStream fileOutputStream = new FileOutputStream(new File(
+						imageName));
+				
+				byte[] buffer = new byte[1024];
+				int length;
+				
+				while ((length = dataInputStream.read(buffer)) > 0) {
+					fileOutputStream.write(buffer, 0, length);
+				}
+				
+				dataInputStream.close();
+				fileOutputStream.close();
+				System.out.println("### Finish download image caches.. ###");
+				
+				return "'http://120.25.232.93/items/images/" + newImage+"'";
+			} catch (MalformedURLException e) {
+				System.out.println("mal url..: "+urlString);
+			} catch (IOException e) {
+				System.out.println("io warning..: "+urlString);
+			} catch (Exception e) {
+				System.out.println("other warning..: "+urlString);
 			}
-
-			dataInputStream.close();
-			fileOutputStream.close();
-			System.out.println("### Finish download image caches.. ###");
-			
-			return "'http://120.25.232.93/items/images/" + newImage+"'";
-		} catch (MalformedURLException e) {
-			System.out.println("mal url..");
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return "'.jpg'";
 	}
