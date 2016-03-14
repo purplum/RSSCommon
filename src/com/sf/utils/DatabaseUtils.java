@@ -29,7 +29,8 @@ public class DatabaseUtils {
 	private String contentTable = "";
 	private final static String Encode = "utf-8";
 	
-	private final String ItemFolder = "/var/www/html/items/images/";
+	private final String ItemFolder = "template/";
+//	private final String ItemFolder = "/var/www/html/items/images/";
 
 	private Connection conn;
 
@@ -209,6 +210,7 @@ public class DatabaseUtils {
 		// dbutil.testCon();
 		//
 		// dbutil.closeCon();
+//		dbutil.downloadPicture("'https://pic2.zhimg.com/ba9e4186d4ffacd7bb3b2579cf666231_b.png'");
 	}
 	
 	private String getImageName(String urls) {
@@ -216,11 +218,28 @@ public class DatabaseUtils {
 		int index = urls.lastIndexOf("/");
 		return urls.substring(index+1);
 	}
+	
+	private String rebuildImageUrlString(String originUrlStr) {
+		
+		int firstIndex = originUrlStr.indexOf("http");
+		if(firstIndex<0) {
+			return originUrlStr;
+		}
+		int lastindex = originUrlStr.indexOf(".png");
+		if(lastindex<0) {
+			lastindex = originUrlStr.indexOf(".jpg");
+		}
+		if(lastindex<0) {
+			return originUrlStr;
+		}
+		return originUrlStr.substring(firstIndex, lastindex+4);
+	}
 
 	public String downloadPicture(String urlString) {
 
 		if(urlString.contains("'")) {
 			urlString = urlString.replaceAll("'", "");
+			urlString = rebuildImageUrlString(urlString);
 			try {
 				URL url = new URL(URLDecoder.decode(urlString, "utf-8"));
 				

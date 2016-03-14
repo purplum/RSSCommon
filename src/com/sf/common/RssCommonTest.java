@@ -32,10 +32,10 @@ public class RssCommonTest {
 
 		RssCommonTest rssTest = new RssCommonTest();
 
-		rssTest.scanCommonRssSources(TuguaCategory,TuguaFeed);
+//		rssTest.scanCommonRssSources(TuguaCategory,TuguaFeed);
 		rssTest.scanCommonRssSources(ZhihuCategory,ZhihuFeed);
-		rssTest.scanCommonRssSources(MacCategory,MacStoryFeed);
-		rssTest.scanCommonRssSources(QuoraCategory,QuoraFeed);
+//		rssTest.scanCommonRssSources(MacCategory,MacStoryFeed);
+//		rssTest.scanCommonRssSources(QuoraCategory,QuoraFeed);
 	}
 
 	public void scanCommonRssSources(String categoryname,int feedid) {
