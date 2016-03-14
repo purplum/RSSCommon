@@ -94,6 +94,7 @@ public class Dom4jXmlParser {
 			String itemName = ele_item.elementText("title");
 			String description = ele_item.elementText("description");
 			String image = ele_item.elementText("image");
+			String focusimage = ele_item.elementText("focus_pic");
 			if(description==null) {
 				System.out.println("### Description node null, turn to content node.. ###");
 				description = ele_item.elementText("content");
@@ -106,12 +107,44 @@ public class Dom4jXmlParser {
 			item.setDescription(description==null?"":description.substring(0, 100));
 			item.setPubdate(pubdate);
 			item.setLink(link);
-			item.setPicLink(image==null?(buildPicURL(description==null?"":description)):image);
+			if(image==null) {
+				if(focusimage==null) {
+					item.setPicLink(buildPicURL(description==null?"":description));
+				}
+				else {
+					item.setPicLink(buildFocusImage(focusimage));
+				}
+			}
+			else {
+				item.setPicLink(image);
+			}
 
 			itemlist.add(item);
 		}
 
 		return itemlist;
+	}
+	
+	private static String buildFocusImage(String originImage) {
+		
+		int firstindex = originImage.indexOf("http");
+		int jpgindex = originImage.indexOf(".jpg");
+		int pngindex = originImage.indexOf(".png");
+		if(firstindex<0) {
+			return ".jpg";
+		}
+		if(jpgindex<0) {
+			if(pngindex<0) {
+				return ".jpg";
+			}
+			else {
+				return originImage.substring(firstindex, pngindex+4);
+			}
+		}
+		else {
+			return originImage.substring(firstindex, jpgindex+4);
+		}
+		
 	}
 
 	private static String buildPicURL(String description) {
@@ -151,9 +184,9 @@ public class Dom4jXmlParser {
 
 	public static void main(String[] args) {
 
-		String description = "img src=\"http://pic.yupoo.com/dapenti/Fn6HQPGq/3HGk5.jpg\"  <p> <a hre";
+		String description = "<![CDATA[http://y.zdmimg.com/201603/14/56e6ac4a7ea282318.png_a200.jpg]]>";
 
-		String finalstr = buildPicURL(description);
+		String finalstr = buildFocusImage(description);
 		System.out.println(finalstr);
 	}
 
