@@ -181,7 +181,13 @@ public class DatabaseUtils {
 	public String convertDate(String dateStr) {
 
 		int firstindex = dateStr.indexOf(" ");
-		int lastindex = dateStr.lastIndexOf(" ");
+		int lastindex = -1;
+		if(dateStr.contains("]]")) {
+			lastindex = dateStr.indexOf("]");
+		}
+		else {
+			lastindex = dateStr.lastIndexOf(" ");
+		}
 
 		if (firstindex >= 0 && lastindex > 0) {
 			dateStr = dateStr.substring(firstindex + 1, lastindex);
