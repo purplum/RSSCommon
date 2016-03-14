@@ -104,7 +104,17 @@ public class Dom4jXmlParser {
 
 			CommonRSSItem item = new CommonRSSItem();
 			item.setTitle(itemName);
-			item.setDescription(description==null?"":description.substring(0, 100));
+			if(description==null) {
+				item.setDescription("");
+			}
+			else {
+				if(description.length()>100) {
+					item.setDescription(description.substring(0, 100));
+				}
+				else {
+					item.setDescription(description);
+				}
+			}
 			item.setPubdate(pubdate);
 			item.setLink(link);
 			if(image==null) {
@@ -127,6 +137,7 @@ public class Dom4jXmlParser {
 	
 	private static String buildFocusImage(String originImage) {
 		
+		System.out.println("### build focus image :"+originImage+" ###");
 		int firstindex = originImage.indexOf("http");
 		int jpgindex = originImage.indexOf(".jpg");
 		int pngindex = originImage.indexOf(".png");
