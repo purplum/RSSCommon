@@ -243,7 +243,7 @@ public class DatabaseUtils {
 			
 			return "'http://120.25.232.93/items/images/" + newImage+"'";
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			System.out.println("mal url..");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
