@@ -247,6 +247,6 @@ public class DatabaseUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "";
+		return ".jpg";
 	}
 }
