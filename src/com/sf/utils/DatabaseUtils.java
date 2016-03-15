@@ -180,7 +180,7 @@ public class DatabaseUtils {
 
 	public String convertDate(String dateStr) {
 
-		System.out.println("### Start convert date str: "+dateStr+" ###");
+		logger.info("### Start convert date str: "+dateStr+" ###");
 		int firstindex = dateStr.indexOf(" ");
 		int lastindex = -1;
 		if(dateStr.contains("]]")) {
@@ -197,13 +197,13 @@ public class DatabaseUtils {
 			java.util.Date now;
 			try {
 				now = df.parse(dateStr);
-				System.out.println(now.getTime());
+				logger.info(now.getTime());
 				return String.valueOf(now.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				try {
 					now = df.parse(dateStr+" 00:00:00");
-					System.out.println(now.getTime());
+					logger.info(now.getTime());
 					return String.valueOf(now.getTime());
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
@@ -273,15 +273,15 @@ public class DatabaseUtils {
 				
 				dataInputStream.close();
 				fileOutputStream.close();
-				System.out.println("### Finish download image caches.. ###");
+				logger.info("### Finish download image caches.. ###");
 				
 				return "'http://120.25.232.93/items/images/" + newImage+"'";
 			} catch (MalformedURLException e) {
-				System.out.println("mal url..: "+urlString);
+				logger.info("mal url..: "+urlString);
 			} catch (IOException e) {
-				System.out.println("io warning..: "+urlString);
+				logger.info("io warning..: "+urlString);
 			} catch (Exception e) {
-				System.out.println("other warning..: "+urlString);
+				logger.info("other warning..: "+urlString);
 			}
 		}
 		return "'.jpg'";

@@ -7,17 +7,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.sf.beans.CommonRSSItem;
 import com.sf.beans.News;
 import com.sf.beans.Outline;
-import com.sf.beans.CommonRSSItem;
 
 public class Dom4jXmlParser {
+	
+	private Logger logger = Logger.getLogger(Dom4jXmlParser.class);
 
-	public static Map<String, List<Outline>> getLinkAsXmlData(URL url)
+	public Map<String, List<Outline>> getLinkAsXmlData(URL url)
 			throws Exception {
 		Map<String, List<Outline>> map_Channels = new HashMap<String, List<Outline>>();
 
@@ -64,7 +67,7 @@ public class Dom4jXmlParser {
 		return map_Channels;
 	}
 
-	public static ArrayList<CommonRSSItem> getCommonLinkAsXmlData(URL url)
+	public ArrayList<CommonRSSItem> getCommonLinkAsXmlData(URL url)
 			throws Exception {
 		ArrayList<CommonRSSItem> itemlist = new ArrayList<CommonRSSItem>();
 
@@ -72,19 +75,19 @@ public class Dom4jXmlParser {
 
 		Document document = null;
 		document = reader.read(url);
-		System.out.println("### Read out rss url contents. ###");
+		logger.info("### Read out rss url contents. ###");
 
 		int circle = 5;
 		while (circle-- > 0 && document == null) {
-			System.out.println("### Cannot resolve url, try again.. ###");
+			logger.info("### Cannot resolve url, try again.. ###");
 			document = reader.read(url);
 			Thread.sleep(3000);
 		}
 		if (document == null) {
-			System.out.println("### Cannot resolve url, abort.. ###");
+			logger.info("### Cannot resolve url, abort.. ###");
 			return itemlist;
 		}
-		System.out.println("### Start operate xml response.. ###");
+		logger.info("### Start operate xml response.. ###");
 		Element root = document.getRootElement();
 
 		List<Element> ele_items = root.element("channel").elements("item");
@@ -96,7 +99,7 @@ public class Dom4jXmlParser {
 			String image = ele_item.elementText("image");
 			String focusimage = ele_item.elementText("focus_pic");
 			if(description==null) {
-				System.out.println("### Description node null, turn to content node.. ###");
+				logger.info("### Description node null, turn to content node.. ###");
 				description = ele_item.elementText("content");
 			}
 			String pubdate = ele_item.elementText("pubDate");
@@ -135,9 +138,9 @@ public class Dom4jXmlParser {
 		return itemlist;
 	}
 	
-	private static String buildFocusImage(String originImage) {
+	private String buildFocusImage(String originImage) {
 		
-		System.out.println("### build focus image :"+originImage+" ###");
+		logger.info("### build focus image :"+originImage+" ###");
 		int firstindex = originImage.indexOf("http");
 		int jpgindex = originImage.indexOf(".jpg");
 		int pngindex = originImage.indexOf(".png");
@@ -158,51 +161,60 @@ public class Dom4jXmlParser {
 		
 	}
 
-	private static String buildPicURL(String description) {
-		String picurl = "";
-
-		String starttag = "img src=";
-		String endtag = ".jpg";
-		String endtag2 = ".png";
-
-		if (description.contains(starttag)) {
-			int startindex = description.indexOf(starttag);
-			int endindex = description.indexOf(endtag);
-			int end2index = description.indexOf(endtag2);
-			if(startindex<0) {
-				return "";
-			}
-			else if(endindex<0) {
-				if(end2index<0) {
-					return "";
-				}
-				else {
-					picurl = description.substring(startindex + starttag.length() + 1,
-							end2index);
-				}
-			}
-			else if(endindex<=startindex) {
-				return "";
-			}
-			else {
-				picurl = description.substring(startindex + starttag.length() + 1,
-						endindex);
-			}
-		}
-
-		return picurl + endtag;
+	private String buildPicURL(String description) {
+		
+		ImageUtils util = new ImageUtils();
+		return util.getTopImageSrc(description);
+//		String picurl = "";
+//
+//		String starttag = "img src=";
+//		String endtag = ".jpg";
+//		String endtag2 = ".png";
+//
+//		if (description.contains(starttag)) {
+//			int startindex = description.indexOf(starttag);
+//			int endindex = description.indexOf(endtag);
+//			int end2index = description.indexOf(endtag2);
+//			if(startindex<0) {
+//				return "";
+//			}
+//			else if(endindex<0) {
+//				if(end2index<0) {
+//					return "";
+//				}
+//				else {
+//					picurl = description.substring(startindex + starttag.length() + 1,
+//							end2index);
+//				}
+//			}
+//			else if(endindex<=startindex) {
+//				return "";
+//			}
+//			else {
+//				picurl = description.substring(startindex + starttag.length() + 1,
+//						endindex);
+//			}
+//		}
+//
+//		return picurl + endtag;
 	}
 
 	public static void main(String[] args) {
 
-		String description = "<![CDATA[http://y.zdmimg.com/201603/14/56e6ac4a7ea282318.png_a200.jpg]]>";
+		String description = "<table width=><img src=\"http://statisches.auslieferung.commindo-media-ressourcen.de/advertisement.gif\" /"
+				+ "><br /><a href=\"http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position"
+				+ "=><img src=\"http://auslieferung.commindo-media-ressourcen.de/random.php?mode=image&collection=smashing-rss&position=1"
+				+ "http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position="
+				+ "2\"><img src=\"http://auslieferung.commindo-media-ressourcen.de/random.php?mode=image&collection=smashing-rss&position=2\""
+				+ "http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position=3";
 
-		String finalstr = buildFocusImage(description);
+		Dom4jXmlParser parser = new Dom4jXmlParser();
+		String finalstr = parser.buildFocusImage(description);
 		System.out.println(finalstr);
 	}
 
 	// 根据URL解析单个子频道内的XML新闻数据
-	public static List<News> getNewsAsXmlData(URL url) throws Exception {
+	public List<News> getNewsAsXmlData(URL url) throws Exception {
 		// 加载XML到内存解析并得到Document对象
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(url);
