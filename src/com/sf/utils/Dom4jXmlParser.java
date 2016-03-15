@@ -112,7 +112,7 @@ public class Dom4jXmlParser {
 			}
 			else {
 				if(description.length()>100) {
-					item.setDescription(description.substring(0, 100));
+					item.setDescription(description.substring(0, 60));
 				}
 				else {
 					item.setDescription(description);
