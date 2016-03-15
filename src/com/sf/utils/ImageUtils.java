@@ -48,7 +48,23 @@ public class ImageUtils {
 		if (srcList != null && srcList.size() > 0) {
 			String topsrc = srcList.get(0);
 			System.out.println("## Filter out image src: [" + topsrc + "] ##");
-			return srcList.get(0);
+			if(topsrc.endsWith(".jpg") || topsrc.endsWith(".png") ||topsrc.endsWith(".gif")) {
+				return topsrc;
+			}
+			else {
+				String end = "";
+				if(topsrc.contains(".jpg")) {
+					end = ".jpg";
+				}
+				else if(topsrc.contains(".png")) {
+					end = ".png";
+				}
+				else if(topsrc.contains(".gif")) {
+					end = ".gif";
+				}
+				int endIndex = topsrc.indexOf(end);
+				return topsrc.substring(0, endIndex+4);
+			}
 		}
 		return "";
 	}
@@ -81,8 +97,11 @@ public class ImageUtils {
 	 * @return
 	 */
 	private List<String> getImageUrl(String HTML) {
-		Matcher matcher = Pattern.compile(IMGURL_REG).matcher(HTML);
 		List<String> listImgUrl = new ArrayList<String>();
+		if(HTML==null) {
+			return listImgUrl;
+		}
+		Matcher matcher = Pattern.compile(IMGURL_REG).matcher(HTML);
 		while (matcher.find()) {
 			listImgUrl.add(matcher.group());
 		}

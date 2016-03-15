@@ -62,7 +62,7 @@ public class RssCommonTest {
 
 	public void scanCommonRssSources(String categoryname, int feedid) {
 
-		logger.info("### Start Common Rss scanning... ###");
+		logger.info("### Start Common Rss scanning ["+categoryname+"] ###");
 
 		Dom4jXmlParser parser = new Dom4jXmlParser();
 		try {
