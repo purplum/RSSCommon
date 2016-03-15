@@ -18,7 +18,7 @@ public class ImageUtils {
 
 	private static final String ECODING = "UTF-8";
 	private static final String IMGURL_REG = "<img.*src=(.*?)[^>]*?>";
-	private static final String IMGSRC_REG = "http:\"?(.*?)(\"|>|\\s+)";
+	private static final String IMGSRC_REG = "http\"?(.*?)(\"|>|\\s+)";
 
 	public static void main(String[] args) throws Exception {
 		ImageUtils cm = new ImageUtils();

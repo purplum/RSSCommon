@@ -24,6 +24,8 @@ public class RssCommonTest {
 	private final static String SmzdmCategory = "Smzdm";
 	private final static String SmashCategory = "Smashmagz";
 	private final static String PentiCategory = "Penti";
+	private final static String GeekCategory = "Geekpark";
+	private final static String WhospmCategory = "Whoshipm";
 
 	private final static int TuguaFeed = 1;
 	private final static int ZhihuFeed = 2;
@@ -34,12 +36,14 @@ public class RssCommonTest {
 	private final static int SmzdmFeed = 7;
 	private final static int SmashFeed = 8;
 	private final static int PentiFeed = 9;
+	private final static int GeekFeed = 10;
+	private final static int WhospmFeed = 11;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		// System.setProperty("http.proxyHost", "proxy");
-		// System.setProperty("http.proxyPort", "8080");
+//		 System.setProperty("http.proxyHost", "proxy");
+//		 System.setProperty("http.proxyPort", "8080");
 
 		RssCommonTest rssTest = new RssCommonTest();
 
@@ -52,6 +56,8 @@ public class RssCommonTest {
 		rssTest.scanCommonRssSources(SmzdmCategory, SmzdmFeed);
 		rssTest.scanCommonRssSources(SmashCategory, SmashFeed);
 		rssTest.scanCommonRssSources(PentiCategory, PentiFeed);
+		rssTest.scanCommonRssSources(GeekCategory, GeekFeed);
+		rssTest.scanCommonRssSources(WhospmCategory, WhospmFeed);
 	}
 
 	public void scanCommonRssSources(String categoryname, int feedid) {

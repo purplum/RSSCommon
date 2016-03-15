@@ -96,11 +96,12 @@ public class Dom4jXmlParser {
 			Element ele_item = iterator_items.next();
 			String itemName = ele_item.elementText("title");
 			String description = ele_item.elementText("description");
+			String contentencode = ele_item.elementText("encoded");
 			String image = ele_item.elementText("image");
 			String focusimage = ele_item.elementText("focus_pic");
 			if(description==null) {
 				logger.info("### Description node null, turn to content node.. ###");
-				description = ele_item.elementText("content");
+				description = ele_item.elementText("encoded");
 			}
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
@@ -122,7 +123,7 @@ public class Dom4jXmlParser {
 			item.setLink(link);
 			if(image==null) {
 				if(focusimage==null) {
-					item.setPicLink(buildPicURL(description==null?"":description));
+					item.setPicLink(buildPicURL(description==null?"":description,contentencode));
 				}
 				else {
 					item.setPicLink(buildFocusImage(focusimage));
@@ -161,42 +162,14 @@ public class Dom4jXmlParser {
 		
 	}
 
-	private String buildPicURL(String description) {
+	private String buildPicURL(String description,String contentencode) {
 		
 		ImageUtils util = new ImageUtils();
-		return util.getTopImageSrc(description);
-//		String picurl = "";
-//
-//		String starttag = "img src=";
-//		String endtag = ".jpg";
-//		String endtag2 = ".png";
-//
-//		if (description.contains(starttag)) {
-//			int startindex = description.indexOf(starttag);
-//			int endindex = description.indexOf(endtag);
-//			int end2index = description.indexOf(endtag2);
-//			if(startindex<0) {
-//				return "";
-//			}
-//			else if(endindex<0) {
-//				if(end2index<0) {
-//					return "";
-//				}
-//				else {
-//					picurl = description.substring(startindex + starttag.length() + 1,
-//							end2index);
-//				}
-//			}
-//			else if(endindex<=startindex) {
-//				return "";
-//			}
-//			else {
-//				picurl = description.substring(startindex + starttag.length() + 1,
-//						endindex);
-//			}
-//		}
-//
-//		return picurl + endtag;
+		String topimage = util.getTopImageSrc(description);
+		if(topimage==null||topimage.equals("")) {
+			topimage = util.getTopImageSrc(contentencode);
+		}
+		return topimage;
 	}
 
 	public static void main(String[] args) {
