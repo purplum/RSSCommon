@@ -52,7 +52,7 @@ public class DatabaseUtils {
 			conn = DriverManager.getConnection(url, DBUSER, DBPASSWORD);
 
 			if (!conn.isClosed()) {
-				logger.info("###Succeeded connecting to the Database! ###");
+				System.out.println("###Succeeded connecting to the Database! ###");
 			}
 
 			statement = conn.createStatement();
@@ -78,9 +78,9 @@ public class DatabaseUtils {
 		try {
 			rs = statement.executeQuery(sql);
 
-			logger.info("-----------------");
-			logger.info("-- |Title|\t |contentID|\t |Link| --");
-			logger.info("-----------------");
+			System.out.println("-----------------");
+			System.out.println("-- |Title|\t |contentID|\t |Link| --");
+			System.out.println("-----------------");
 
 			String name = null;
 
@@ -91,14 +91,14 @@ public class DatabaseUtils {
 					String contentid = rs.getString("ContentID");
 					String link = rs.getString("Link");
 
-					logger.info(name + "\t" + contentid + "\t" + link);
+					System.out.println(name + "\t" + contentid + "\t" + link);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			logger.info("-----------------");
+			System.out.println("-----------------");
 			rs.close();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -112,14 +112,14 @@ public class DatabaseUtils {
 		int rs;
 		try {
 			rs = statement.executeUpdate(sql);
-			logger.info("### Finish Insert into db.. ###");
+			System.out.println("### Finish Insert into db.. ###");
 		}  catch (SQLException e) {
 			// TODO Auto-generated catch block
-			logger.info("### sql exceptions' warning.. ###");
+			System.out.println("### sql exceptions' warning.. ###");
 		} catch (Exception e1) {
-			logger.info("##########################");
-			logger.info("### Duplicate entry... ###");
-			logger.info("##########################");
+			System.out.println("##########################");
+			System.out.println("### Duplicate entry... ###");
+			System.out.println("##########################");
 		}
 	}
 
@@ -170,7 +170,7 @@ public class DatabaseUtils {
 		if (conn != null) {
 			try {
 				conn.close();
-				logger.info("### DB Closed.. ###");
+				System.out.println("### DB Closed.. ###");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -180,7 +180,7 @@ public class DatabaseUtils {
 
 	public String convertDate(String dateStr) {
 
-		logger.info("### Start convert date str: "+dateStr+" ###");
+		System.out.println("### Start convert date str: "+dateStr+" ###");
 		int firstindex = dateStr.indexOf(" ");
 		int lastindex = -1;
 		if(dateStr.contains("]]")) {
@@ -197,13 +197,13 @@ public class DatabaseUtils {
 			java.util.Date now;
 			try {
 				now = df.parse(dateStr);
-				logger.info(now.getTime());
+				System.out.println(now.getTime());
 				return String.valueOf(now.getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				try {
 					now = df.parse(dateStr+" 00:00:00");
-					logger.info(now.getTime());
+					System.out.println(now.getTime());
 					return String.valueOf(now.getTime());
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
@@ -273,15 +273,15 @@ public class DatabaseUtils {
 				
 				dataInputStream.close();
 				fileOutputStream.close();
-				logger.info("### Finish download image caches.. ###");
+				System.out.println("### Finish download image caches.. ###");
 				
 				return "'http://120.25.232.93/items/images/" + newImage+"'";
 			} catch (MalformedURLException e) {
-				logger.info("mal url..: "+urlString);
+				System.out.println("mal url..: "+urlString);
 			} catch (IOException e) {
-				logger.info("io warning..: "+urlString);
+				System.out.println("io warning..: "+urlString);
 			} catch (Exception e) {
-				logger.info("other warning..: "+urlString);
+				System.out.println("other warning..: "+urlString);
 			}
 		}
 		return "'.jpg'";

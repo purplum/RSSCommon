@@ -49,7 +49,7 @@ public class RssCommonTest {
 
 		rssTest.scanCommonRssSources(TuguaCategory, TuguaFeed);
 		rssTest.scanCommonRssSources(ZhihuCategory, ZhihuFeed);
-		rssTest.scanCommonRssSources(MacCategory, MacStoryFeed);
+//		rssTest.scanCommonRssSources(MacCategory, MacStoryFeed);
 		rssTest.scanCommonRssSources(QuoraCategory, QuoraFeed);
 		rssTest.scanCommonRssSources(IFanCategory, IFanFeed);
 		rssTest.scanCommonRssSources(ILifeCategory, ILifeFeed);
@@ -62,7 +62,7 @@ public class RssCommonTest {
 
 	public void scanCommonRssSources(String categoryname, int feedid) {
 
-		logger.info("### Start Common Rss scan... ###");
+		logger.info("### Start Common Rss scanning... ###");
 
 		Dom4jXmlParser parser = new Dom4jXmlParser();
 		try {

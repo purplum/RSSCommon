@@ -47,7 +47,7 @@ public class ImageUtils {
 		List<String> srcList = getImageSRCList(content);
 		if (srcList != null && srcList.size() > 0) {
 			String topsrc = srcList.get(0);
-			logger.info("## Filter out image src: [" + topsrc + "] ##");
+			System.out.println("## Filter out image src: [" + topsrc + "] ##");
 			return srcList.get(0);
 		}
 		return "";

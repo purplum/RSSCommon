@@ -75,19 +75,19 @@ public class Dom4jXmlParser {
 
 		Document document = null;
 		document = reader.read(url);
-		logger.info("### Read out rss url contents. ###");
+		System.out.println("### Read out rss url contents. ###");
 
 		int circle = 5;
 		while (circle-- > 0 && document == null) {
-			logger.info("### Cannot resolve url, try again.. ###");
+			System.out.println("### Cannot resolve url, try again.. ###");
 			document = reader.read(url);
 			Thread.sleep(3000);
 		}
 		if (document == null) {
-			logger.info("### Cannot resolve url, abort.. ###");
+			System.out.println("### Cannot resolve url, abort.. ###");
 			return itemlist;
 		}
-		logger.info("### Start operate xml response.. ###");
+		System.out.println("### Start operate xml response.. ###");
 		Element root = document.getRootElement();
 
 		List<Element> ele_items = root.element("channel").elements("item");
@@ -100,7 +100,7 @@ public class Dom4jXmlParser {
 			String image = ele_item.elementText("image");
 			String focusimage = ele_item.elementText("focus_pic");
 			if(description==null) {
-				logger.info("### Description node null, turn to content node.. ###");
+				System.out.println("### Description node null, turn to content node.. ###");
 				description = ele_item.elementText("encoded");
 			}
 			String pubdate = ele_item.elementText("pubDate");
@@ -141,7 +141,7 @@ public class Dom4jXmlParser {
 	
 	private String buildFocusImage(String originImage) {
 		
-		logger.info("### build focus image :"+originImage+" ###");
+		System.out.println("### build focus image :"+originImage+" ###");
 		int firstindex = originImage.indexOf("http");
 		int jpgindex = originImage.indexOf(".jpg");
 		int pngindex = originImage.indexOf(".png");
