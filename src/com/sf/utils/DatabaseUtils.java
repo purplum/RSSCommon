@@ -251,6 +251,7 @@ public class DatabaseUtils {
 
 	public String downloadPicture(String urlString) {
 
+		System.out.println("### Start downloading image caches.. ###");
 		if(urlString.contains("'")) {
 			urlString = urlString.replaceAll("'", "");
 			urlString = rebuildImageUrlString(urlString);
@@ -277,12 +278,15 @@ public class DatabaseUtils {
 				
 				return "'http://120.25.232.93/items/images/" + newImage+"'";
 			} catch (MalformedURLException e) {
-				System.out.println("mal url..: "+urlString);
+				System.out.println("##!! mal url..: "+urlString+" Warning: "+e.getLocalizedMessage());
 			} catch (IOException e) {
-				System.out.println("io warning..: "+urlString);
+				System.out.println("##!! io warning..: "+urlString+" Warning: "+e.getLocalizedMessage());
 			} catch (Exception e) {
-				System.out.println("other warning..: "+urlString);
+				System.out.println("##!! other warning..: "+urlString+" Warning: "+e.getLocalizedMessage());
 			}
+		}
+		else {
+			System.out.println("##!! URL Not valid format, skip download images.. ###");
 		}
 		return "'.jpg'";
 	}
