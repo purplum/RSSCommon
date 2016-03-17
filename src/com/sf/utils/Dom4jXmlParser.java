@@ -87,7 +87,7 @@ public class Dom4jXmlParser {
 			System.out.println("### Cannot resolve url, abort.. ###");
 			return itemlist;
 		}
-		System.out.println("### Start operate xml response.. ###");
+		System.out.println("### Start operate xml response ["+url.toString()+"] ###");
 		Element root = document.getRootElement();
 
 		List<Element> ele_items = root.element("channel").elements("item");
@@ -108,6 +108,7 @@ public class Dom4jXmlParser {
 
 			CommonRSSItem item = new CommonRSSItem();
 			item.setTitle(itemName);
+			item.setOriginContent(description);
 			if(description==null) {
 				item.setDescription("");
 			}

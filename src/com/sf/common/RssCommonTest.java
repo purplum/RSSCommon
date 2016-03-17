@@ -72,9 +72,13 @@ public class RssCommonTest {
 			for (CommonRSSItem item : itemlist) {
 
 				String title = item.getTitle().trim();
-				String content = item.getDescription();
-				insertIntoDB(title, content.trim(), item.getPubdate().trim(),
-						item.getLink(), categoryname, "'" + item.getPicLink()
+				String content = item.getOriginContent();
+				String description = item.getDescription();
+				String piclink = item.getPicLink();
+				String originlink = item.getLink();
+				String newlink = generateItemLink(title,piclink,content,description,originlink);
+				insertIntoDB(title, description, item.getPubdate().trim(),
+						newlink, categoryname, "'" + piclink
 								+ "'", feedid);
 			}
 		} catch (Exception e) {
@@ -92,12 +96,12 @@ public class RssCommonTest {
 		scanCommonRssSources("Zhihu", 2);
 	}
 
-	private String generateItemLink(String title, String itemcontent) {
+	private String generateItemLink(String title, String logo,String itemcontent,String description,String originurl) {
 
 		HtmlGenerator hg = new HtmlGenerator();
-		String htmlname = hg.generateHtml(title, itemcontent, "");
+		String htmlname = hg.generateHtml(title, logo, itemcontent, description,originurl);
 
-		return "http://120.25.232.93/items/images/" + htmlname;
+		return "http://120.25.232.93/items/single/" + htmlname;
 	}
 
 	public void insertIntoDB(String Title, String Description, String Date,

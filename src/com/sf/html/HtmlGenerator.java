@@ -17,9 +17,8 @@ import freemarker.template.TemplateException;
 public class HtmlGenerator {
 
 	private final String TemplateFolder = "template";
-	private final String TemplateName = "tugua.html";
-	private final String ItemFolder = "/var/www/html/items/tugua/";
-//	private final String ItemFolder = "/var/www/html/items/";
+	private final String TemplateName = "single.html";
+	private final String TargetItemFolder = "/var/www/html/items/single/";
 
 	public HtmlGenerator() {
 
@@ -44,7 +43,7 @@ public class HtmlGenerator {
 			paramMap.put("itemcontent", content);
 
 			Writer writer = new OutputStreamWriter(new FileOutputStream(
-					ItemFolder + itemfilename), "UTF-8");
+					TargetItemFolder + itemfilename), "UTF-8");
 			template.process(paramMap, writer);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -54,6 +53,41 @@ public class HtmlGenerator {
 			e.printStackTrace();
 		}
 
+		System.out.println("finish generate [" + itemfilename + "]");
+		return itemfilename;
+	}
+	
+	public String generateHtml(String title, String logoimg, String content,
+			String itemdescription,String originurl) {
+		
+		String itemfilename = generateHtmlFileName();
+		
+		try {
+			Configuration configuration = new Configuration();
+			configuration.setDirectoryForTemplateLoading(new File(
+					TemplateFolder));
+			configuration.setObjectWrapper(new DefaultObjectWrapper());
+			configuration.setDefaultEncoding("UTF-8");
+			
+			Template template = configuration.getTemplate(TemplateName);
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("itemTitle", title);
+			paramMap.put("itemLogo", logoimg);
+			paramMap.put("description", itemdescription);
+			paramMap.put("itemcontent", content);
+			paramMap.put("itemOrigin", originurl);
+			
+			Writer writer = new OutputStreamWriter(new FileOutputStream(
+					TargetItemFolder + itemfilename), "UTF-8");
+			template.process(paramMap, writer);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TemplateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println("finish generate [" + itemfilename + "]");
 		return itemfilename;
 	}

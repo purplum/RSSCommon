@@ -7,6 +7,7 @@ public class CommonRSSItem {
 	private String pubdate = "";
 	private String link = "";
 	private String picLink = "";
+	private String originContent = "";
 	
 	public String toString() {
 		return "[Title] "+getTitle()+"\n"+
@@ -42,6 +43,14 @@ public class CommonRSSItem {
 	}
 	public void setPicLink(String picLink) {
 		this.picLink = picLink;
+	}
+
+	public String getOriginContent() {
+		return originContent;
+	}
+
+	public void setOriginContent(String originContent) {
+		this.originContent = originContent;
 	}
 
 }

@@ -203,7 +203,7 @@ public class DatabaseUtils {
 				// TODO Auto-generated catch block
 				try {
 					now = df.parse(dateStr+" 00:00:00");
-					System.out.println(now.getTime());
+					System.out.println("### Contert out system time: "+now.getTime()+ " ###");
 					return String.valueOf(now.getTime());
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
