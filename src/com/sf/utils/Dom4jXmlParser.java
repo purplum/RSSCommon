@@ -104,7 +104,12 @@ public class Dom4jXmlParser {
 				description = contentencode;
 			}
 			else if(contentencode!=null) {
-				description = description+contentencode;
+				if(contentencode.contains(description)) {
+					description = contentencode;
+				}
+				else {
+					description = description+contentencode;
+				}
 			}
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
