@@ -18,6 +18,7 @@ public class HtmlGenerator {
 
 	private final String TemplateFolder = "template";
 	private final String TemplateName = "single.html";
+//	private final String TargetItemFolder = "test/";
 	private final String TargetItemFolder = "/var/www/html/items/single/";
 
 	public HtmlGenerator() {

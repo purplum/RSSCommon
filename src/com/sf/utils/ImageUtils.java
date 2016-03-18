@@ -93,7 +93,7 @@ public class ImageUtils {
 			if(img.contains(".gif")||img.contains(".jpg")||img.contains(".png")) {
 				String tmp = "";
 				
-				if(tmp.contains("https")) {
+				if(img.contains("https")) {
 					
 					tmp = img.replaceAll("https", "http");
 					String middle = tmp;
