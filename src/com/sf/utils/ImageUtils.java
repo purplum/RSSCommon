@@ -115,7 +115,7 @@ public class ImageUtils {
 		for (String origin : srcList) {
 
 			String topsrc = getImageSrc(origin);
-			dbutil.downloadPicture(topsrc);
+			dbutil.downloadPicture("'"+topsrc+"'");
 		}
 		return "";
 	}
