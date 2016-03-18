@@ -49,7 +49,8 @@ public class ImageUtils {
 		if (srcList != null && srcList.size() > 0) {
 			String topsrc = srcList.get(0);
 			System.out.println("## Filter out image src: [" + topsrc + "] ##");
-			if(topsrc.endsWith(".jpg") || topsrc.endsWith(".png") ||topsrc.endsWith(".gif")) {
+			if(topsrc.endsWith(".jpg") || topsrc.endsWith(".png") ||topsrc.endsWith(".gif")||
+					topsrc.endsWith(".JPG") || topsrc.endsWith(".PNG") ||topsrc.endsWith(".GIF")) {
 				return topsrc;
 			}
 			else {
@@ -62,6 +63,12 @@ public class ImageUtils {
 				}
 				else if(topsrc.contains(".gif")) {
 					end = ".gif";
+				}
+				else if(topsrc.contains(".PNG")) {
+					end = ".PNG";
+				}
+				else if(topsrc.contains(".GIF")) {
+					end = ".GIF";
 				}
 				int endIndex = topsrc.indexOf(end);
 				if(endIndex>=0) {
