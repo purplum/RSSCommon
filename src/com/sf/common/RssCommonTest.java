@@ -76,7 +76,10 @@ public class RssCommonTest {
 				String description = item.getDescription();
 				String piclink = item.getPicLink();
 				String originlink = item.getLink();
-				String newlink = generateItemLink(title,piclink,content,description,originlink);
+				String newlink = originlink;
+				if(feedid==ZhihuFeed) {
+					newlink = generateItemLink(title,piclink,content,description,originlink);
+				}
 				insertIntoDB(title, description, item.getPubdate().trim(),
 						newlink, categoryname, "'" + piclink
 								+ "'", feedid);
