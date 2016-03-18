@@ -116,7 +116,7 @@ public class Dom4jXmlParser {
 
 			CommonRSSItem item = new CommonRSSItem();
 			item.setTitle(itemName);
-			item.setOriginContent(description);
+			item.setOriginContent(adjustFullContents(description));
 			if(description==null) {
 				item.setDescription("");
 			}
@@ -146,6 +146,15 @@ public class Dom4jXmlParser {
 		}
 
 		return itemlist;
+	}
+	
+	private String adjustFullContents(String origincontent) {
+		
+		String tag = "?rss\" ";
+		if(origincontent.contains(tag)) {
+			origincontent = origincontent.replaceAll(tag, "");
+		}
+		return origincontent;
 	}
 	
 	private String buildFocusImage(String originImage) {
