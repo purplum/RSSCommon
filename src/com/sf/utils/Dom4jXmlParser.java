@@ -87,7 +87,7 @@ public class Dom4jXmlParser {
 			System.out.println("### Cannot resolve url, abort.. ###");
 			return itemlist;
 		}
-		System.out.println("### Start operate xml response ["+url.toString()+"] ###");
+		System.out.println("### Start parsing server response ["+url.toString()+"] ###");
 		Element root = document.getRootElement();
 
 		List<Element> ele_items = root.element("channel").elements("item");
@@ -99,9 +99,12 @@ public class Dom4jXmlParser {
 			String contentencode = ele_item.elementText("encoded");
 			String image = ele_item.elementText("image");
 			String focusimage = ele_item.elementText("focus_pic");
-			if(description==null) {
+			if(description==null || description.equals("")) {
 				System.out.println("### Description node null, turn to content node.. ###");
-				description = ele_item.elementText("encoded");
+				description = contentencode;
+			}
+			else if(contentencode!=null) {
+				description = description+contentencode;
 			}
 			String pubdate = ele_item.elementText("pubDate");
 			String link = ele_item.elementText("link");
