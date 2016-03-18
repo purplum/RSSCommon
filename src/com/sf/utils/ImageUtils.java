@@ -29,10 +29,11 @@ public class ImageUtils {
 				+ "http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position="
 				+ "2\"><img src=\"http://auslieferung.commindo-media-ressourcen.de/random.php?mode=image&collection=smashing-rss&position=2\""
 				+ "http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position=3";
-		List<String> imgUrl = cm.getImageUrl(HTML);
-		List<String> imgSrc = cm.getImageSrc(imgUrl);
-		System.out.println("##uRL: " + imgUrl);
-		System.out.println("##SRC: " + imgSrc);
+//		List<String> imgUrl = cm.getImageUrl(HTML);
+//		List<String> imgSrc = cm.getImageSrc(imgUrl);
+		System.out.println(cm.reShapeImageSrc(HTML));
+//		System.out.println("##uRL: " + imgUrl);
+//		System.out.println("##SRC: " + imgSrc);
 	}
 
 	public List<String> getImageSRCList(String content) {
@@ -63,10 +64,44 @@ public class ImageUtils {
 					end = ".gif";
 				}
 				int endIndex = topsrc.indexOf(end);
-				return topsrc.substring(0, endIndex+4);
+				if(endIndex>=0) {
+					String finalStr = topsrc.substring(0, endIndex+4);
+					System.out.println("### Final Image url: "+finalStr);
+					return finalStr;
+				}
 			}
 		}
 		return "";
+	}
+	
+	public String reShapeImageSrc(String content) {
+		
+		List<String> srcList = getImageSRCList(content);
+		String firsttag = "://";
+		String endtag = "/";
+		for(String img: srcList) {
+			if(img==null) {
+				continue;
+			}
+			if(img.contains(".gif")||img.contains(".jpg")||img.contains(".png")) {
+				String tmp = "";
+				
+				tmp = img.replaceAll("https", "http");
+				String middle = tmp;
+				int firstIndex = tmp.indexOf(firsttag);
+				
+				if(middle.length()<=firstIndex+3) {
+					continue;
+				}
+				middle = middle.substring(firstIndex+3);
+				int lastIndex = middle.indexOf(endtag);
+				middle = middle.substring(0, lastIndex);
+				
+				tmp = tmp.replaceAll(middle, "120.25.232.93/items/images/");
+				content = content.replace(img, tmp);
+			}
+		}
+		return content;
 	}
 
 	/***
