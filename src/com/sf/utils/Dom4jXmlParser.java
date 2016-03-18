@@ -150,9 +150,9 @@ public class Dom4jXmlParser {
 	
 	private String adjustFullContents(String origincontent) {
 		
-		String tag = "?rss\" ";
+		String tag = ".jpg?rss";
 		if(origincontent.contains(tag)) {
-			origincontent = origincontent.replaceAll(tag, "");
+			origincontent = origincontent.replaceAll(tag, ".jpg");
 		}
 		return origincontent;
 	}
