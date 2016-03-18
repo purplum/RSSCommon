@@ -86,19 +86,25 @@ public class ImageUtils {
 			if(img.contains(".gif")||img.contains(".jpg")||img.contains(".png")) {
 				String tmp = "";
 				
-				tmp = img.replaceAll("https", "http");
-				String middle = tmp;
-				int firstIndex = tmp.indexOf(firsttag);
-				
-				if(middle.length()<=firstIndex+3) {
+				if(tmp.contains("https")) {
+					
+					tmp = img.replaceAll("https", "http");
+					String middle = tmp;
+					int firstIndex = tmp.indexOf(firsttag);
+					
+					if(middle.length()<=firstIndex+3) {
+						continue;
+					}
+					middle = middle.substring(firstIndex+3);
+					int lastIndex = middle.indexOf(endtag);
+					middle = middle.substring(0, lastIndex);
+					
+					tmp = tmp.replaceAll(middle, "120.25.232.93/items/images/");
+					content = content.replace(img, tmp);
+				}
+				else {
 					continue;
 				}
-				middle = middle.substring(firstIndex+3);
-				int lastIndex = middle.indexOf(endtag);
-				middle = middle.substring(0, lastIndex);
-				
-				tmp = tmp.replaceAll(middle, "120.25.232.93/items/images/");
-				content = content.replace(img, tmp);
 			}
 		}
 		return content;
