@@ -48,6 +48,9 @@ public class ImageUtils {
 		List<String> srcList = getImageSRCList(content);
 		if (srcList != null && srcList.size() > 0) {
 			String topsrc = srcList.get(0);
+			if(topsrc.contains("advertisement")&&srcList.size() > 1) {
+				topsrc = srcList.get(1);
+			}
 			System.out.println("## Filter out image src: [" + topsrc + "] ##");
 			if(topsrc.endsWith(".jpg") || topsrc.endsWith(".png") ||topsrc.endsWith(".gif")||
 					topsrc.endsWith(".JPG") || topsrc.endsWith(".PNG") ||topsrc.endsWith(".GIF")) {
