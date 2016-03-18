@@ -151,7 +151,8 @@ public class Dom4jXmlParser {
 	
 	private String adjustFullContents(String origincontent) {
 		
-		return reShapePicURL(origincontent);
+//		return reShapePicURL(origincontent);
+		return origincontent;
 	}
 	
 	private String buildFocusImage(String originImage) {
@@ -181,23 +182,18 @@ public class Dom4jXmlParser {
 		
 		ImageUtils util = new ImageUtils();
 		String topimage = util.getTopImageSrc(description);
-		
 		if(topimage==null||topimage.equals("")) {
 			topimage = util.getTopImageSrc(contentencode);
-			util.cacheAllImageSrc(contentencode);
-		}
-		else {
-			util.cacheAllImageSrc(description);
 		}
 		return topimage;
 	}
 	
-	private String reShapePicURL(String description) {
-		
-		ImageUtils util = new ImageUtils();
-		String topimage = util.reShapeImageSrc(description);
-		return topimage;
-	}
+//	private String reShapePicURL(String description) {
+//		
+//		ImageUtils util = new ImageUtils();
+//		String topimage = util.reShapeImageSrc(description);
+//		return topimage;
+//	}
 
 	public static void main(String[] args) {
 
