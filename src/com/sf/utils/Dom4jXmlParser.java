@@ -181,8 +181,13 @@ public class Dom4jXmlParser {
 		
 		ImageUtils util = new ImageUtils();
 		String topimage = util.getTopImageSrc(description);
+		
 		if(topimage==null||topimage.equals("")) {
 			topimage = util.getTopImageSrc(contentencode);
+			util.cacheAllImageSrc(contentencode);
+		}
+		else {
+			util.cacheAllImageSrc(description);
 		}
 		return topimage;
 	}

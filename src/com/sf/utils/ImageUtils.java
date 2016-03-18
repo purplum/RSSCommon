@@ -29,11 +29,11 @@ public class ImageUtils {
 				+ "http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position="
 				+ "2\"><img src=\"http://auslieferung.commindo-media-ressourcen.de/random.php?mode=image&collection=smashing-rss&position=2\""
 				+ "http://auslieferung.commindo-media-ressourcen.de/random.php?mode=target&collection=smashing-rss&position=3";
-//		List<String> imgUrl = cm.getImageUrl(HTML);
-//		List<String> imgSrc = cm.getImageSrc(imgUrl);
+		// List<String> imgUrl = cm.getImageUrl(HTML);
+		// List<String> imgSrc = cm.getImageSrc(imgUrl);
 		System.out.println(cm.reShapeImageSrc(HTML));
-//		System.out.println("##uRL: " + imgUrl);
-//		System.out.println("##SRC: " + imgSrc);
+		// System.out.println("##uRL: " + imgUrl);
+		// System.out.println("##SRC: " + imgSrc);
 	}
 
 	public List<String> getImageSRCList(String content) {
@@ -49,67 +49,106 @@ public class ImageUtils {
 		if (srcList != null && srcList.size() > 0) {
 			String topsrc = srcList.get(0);
 			System.out.println("## Filter out image src: [" + topsrc + "] ##");
-			if(topsrc.endsWith(".jpg") || topsrc.endsWith(".png") ||topsrc.endsWith(".gif")||
-					topsrc.endsWith(".JPG") || topsrc.endsWith(".PNG") ||topsrc.endsWith(".GIF")) {
+			if (topsrc.endsWith(".jpg") || topsrc.endsWith(".png")
+					|| topsrc.endsWith(".gif") || topsrc.endsWith(".JPG")
+					|| topsrc.endsWith(".PNG") || topsrc.endsWith(".GIF")) {
 				return topsrc;
-			}
-			else {
+			} else {
 				String end = "";
-				if(topsrc.contains(".jpg")) {
+				if (topsrc.contains(".jpg")) {
 					end = ".jpg";
-				}
-				else if(topsrc.contains(".png")) {
+				} else if (topsrc.contains(".png")) {
 					end = ".png";
-				}
-				else if(topsrc.contains(".gif")) {
+				} else if (topsrc.contains(".gif")) {
 					end = ".gif";
-				}
-				else if(topsrc.contains(".PNG")) {
+				} else if (topsrc.contains(".PNG")) {
 					end = ".PNG";
-				}
-				else if(topsrc.contains(".GIF")) {
+				} else if (topsrc.contains(".GIF")) {
 					end = ".GIF";
 				}
 				int endIndex = topsrc.indexOf(end);
-				if(endIndex>=0) {
-					String finalStr = topsrc.substring(0, endIndex+4);
-					System.out.println("### Final Image url: "+finalStr);
+				if (endIndex >= 0) {
+					String finalStr = topsrc.substring(0, endIndex + 4);
+					System.out.println("### Final Image url: " + finalStr);
 					return finalStr;
 				}
 			}
 		}
 		return "";
 	}
-	
+
+	public String getImageSrc(String topsrc) {
+
+		System.out.println("## Filter out image src: [" + topsrc + "] ##");
+		if (topsrc.endsWith(".jpg") || topsrc.endsWith(".png")
+				|| topsrc.endsWith(".gif") || topsrc.endsWith(".JPG")
+				|| topsrc.endsWith(".PNG") || topsrc.endsWith(".GIF")) {
+			return topsrc;
+		} else {
+			String end = "";
+			if (topsrc.contains(".jpg")) {
+				end = ".jpg";
+			} else if (topsrc.contains(".png")) {
+				end = ".png";
+			} else if (topsrc.contains(".gif")) {
+				end = ".gif";
+			} else if (topsrc.contains(".PNG")) {
+				end = ".PNG";
+			} else if (topsrc.contains(".GIF")) {
+				end = ".GIF";
+			}
+			int endIndex = topsrc.indexOf(end);
+			if (endIndex >= 0) {
+				String finalStr = topsrc.substring(0, endIndex + 4);
+				System.out.println("### Final Image url: " + finalStr);
+				return finalStr;
+			}
+		}
+		return "";
+	}
+
+	public String cacheAllImageSrc(String content) {
+
+		System.out.println("### Cache all images.. ###");
+		List<String> srcList = getImageSRCList(content);
+		DatabaseUtils dbutil = new DatabaseUtils();
+		for (String origin : srcList) {
+
+			String topsrc = getImageSrc(origin);
+			dbutil.downloadPicture(topsrc);
+		}
+		return "";
+	}
+
 	public String reShapeImageSrc(String content) {
-		
+
 		List<String> srcList = getImageSRCList(content);
 		String firsttag = "://";
 		String endtag = "/";
-		for(String img: srcList) {
-			if(img==null) {
+		for (String img : srcList) {
+			if (img == null) {
 				continue;
 			}
-			if(img.contains(".gif")||img.contains(".jpg")||img.contains(".png")) {
+			if (img.contains(".gif") || img.contains(".jpg")
+					|| img.contains(".png")) {
 				String tmp = "";
-				
-				if(img.contains("https")) {
-					
+
+				if (img.contains("https")) {
+
 					tmp = img.replaceAll("https", "http");
 					String middle = tmp;
 					int firstIndex = tmp.indexOf(firsttag);
-					
-					if(middle.length()<=firstIndex+3) {
+
+					if (middle.length() <= firstIndex + 3) {
 						continue;
 					}
-					middle = middle.substring(firstIndex+3);
+					middle = middle.substring(firstIndex + 3);
 					int lastIndex = middle.indexOf(endtag);
 					middle = middle.substring(0, lastIndex);
-					
+
 					tmp = tmp.replaceAll(middle, "120.25.232.93/items/images/");
 					content = content.replace(img, tmp);
-				}
-				else {
+				} else {
 					continue;
 				}
 			}
@@ -146,7 +185,7 @@ public class ImageUtils {
 	 */
 	private List<String> getImageUrl(String HTML) {
 		List<String> listImgUrl = new ArrayList<String>();
-		if(HTML==null) {
+		if (HTML == null) {
 			return listImgUrl;
 		}
 		Matcher matcher = Pattern.compile(IMGURL_REG).matcher(HTML);
