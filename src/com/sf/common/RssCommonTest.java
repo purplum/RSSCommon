@@ -107,7 +107,7 @@ public class RssCommonTest {
 		HtmlGenerator hg = new HtmlGenerator();
 		String htmlname = hg.generateHtml(title, logo, itemcontent, description,originurl);
 
-		return "http://120.25.232.93/items/single/" + htmlname;
+		return "http://www.ayinexpress.cn/items/single/" + htmlname;
 	}
 
 	public void insertIntoDB(String Title, String Description, String Date,

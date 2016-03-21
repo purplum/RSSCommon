@@ -276,7 +276,7 @@ public class DatabaseUtils {
 				fileOutputStream.close();
 				System.out.println("### Finish download image caches..["+urlString+"] ###");
 				
-				return "'http://120.25.232.93/items/images/" + newImage+"'";
+				return "'http://www.ayinexpress.cn/items/images/" + newImage+"'";
 			} catch (MalformedURLException e) {
 				System.out.println("##!! mal url..: "+urlString+" Warning: "+e.getLocalizedMessage());
 			} catch (IOException e) {
