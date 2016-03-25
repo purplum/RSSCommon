@@ -79,19 +79,24 @@ public class RssCommonTest {
 				String newlink = originlink;
 				if(feedid==ZhihuFeed) {
 					//do origin link.
+					insertIntoDB(title, description, item.getPubdate().trim(),
+							newlink, categoryname, "'" + piclink
+									+ "'", feedid);
 				}
 				else {
-					if(feedid==PentiFeed) {
-						if(title.contains("喷嚏图卦")) {
-							feedid = TuguaFeed;
-							categoryname = TuguaCategory;
-						}
-					}
 					newlink = generateItemLink(title,piclink,content,description,originlink);
+					if(feedid==PentiFeed&&title.contains("喷嚏图卦")) {
+						insertIntoDB(title, description, item.getPubdate().trim(),
+								newlink, TuguaCategory, "'" + piclink
+										+ "'", TuguaFeed);
+					}
+					else {
+						insertIntoDB(title, description, item.getPubdate().trim(),
+								newlink, categoryname, "'" + piclink
+										+ "'", feedid);
+					}
 				}
-				insertIntoDB(title, description, item.getPubdate().trim(),
-						newlink, categoryname, "'" + piclink
-								+ "'", feedid);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
