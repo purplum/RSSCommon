@@ -81,10 +81,13 @@ public class RssCommonTest {
 					//do origin link.
 				}
 				else {
-					newlink = generateItemLink(title,piclink,content,description,originlink);
-					if(feedid==TuguaFeed) {
-						description = "";
+					if(feedid==PentiFeed) {
+						if(title.contains("喷嚏图卦")) {
+							feedid = TuguaFeed;
+							categoryname = TuguaCategory;
+						}
 					}
+					newlink = generateItemLink(title,piclink,content,description,originlink);
 				}
 				insertIntoDB(title, description, item.getPubdate().trim(),
 						newlink, categoryname, "'" + piclink
