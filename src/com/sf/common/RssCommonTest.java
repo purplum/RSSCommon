@@ -82,6 +82,9 @@ public class RssCommonTest {
 				}
 				else {
 					newlink = generateItemLink(title,piclink,content,description,originlink);
+					if(feedid==TuguaFeed) {
+						description = "";
+					}
 				}
 				insertIntoDB(title, description, item.getPubdate().trim(),
 						newlink, categoryname, "'" + piclink
