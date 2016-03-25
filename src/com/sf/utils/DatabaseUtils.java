@@ -115,7 +115,7 @@ public class DatabaseUtils {
 			System.out.println("### Finish Insert into db.. ###");
 		}  catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("### sql exceptions' warning.. ###");
+			System.out.println("### sql exceptions' warning.. "+e.getMessage()+" ###");
 		} catch (Exception e1) {
 			System.out.println("##########################");
 			System.out.println("### Duplicate entry... ###");
