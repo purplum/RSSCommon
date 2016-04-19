@@ -100,54 +100,51 @@ public class HtmlGenerator {
 		String link = "";
 		String name = "";
 
-		switch (categoryname) {
-		case "Tugua":
+		if( "Tugua".equals(categoryname)) {
 			link = "tugua.html";
 			name = "图卦";
-			break;
-		case "Zhihu":
+		}
+		else if( "Zhihu".equals(categoryname)) {
 			link = "zhihu.html";
 			name = "知乎精选";
-			break;
-		case "MacStory":
+		}
+		else if( "MacStory".equals(categoryname)) {
 			link = "macstory.html";
 			name = "Mac Story";
-			break;
-		case "Quora":
+		}
+		else if( "Quora".equals(categoryname)) {
 			link = "quora.html";
 			name = "Quora精选";
-			break;
-		case "IFan":
+		}
+		else if( "IFan".equals(categoryname)) {
 			link = "ifan.html";
 			name = "极客范儿";
-			break;
-		case "IdeaLife":
+		}
+		else if( "IdeaLife".equals(categoryname)) {
 			link = "fasion.html";
 			name = "时尚设计";
-			break;
-		case "Smzdm":
+		}
+		else if( "Smzdm".equals(categoryname)) {
 			link = "smzdm.html";
 			name = "神马值得买";
-			break;
-		case "Smashmagz":
+		}
+		else if( "Smashmagz".equals(categoryname)) {
 			link = "fasion.html";
 			name = "时尚设计";
-			break;
-		case "Penti":
+		}
+		else if( "Penti".equals(categoryname)) {
 			link = "penti.html";
 			name = "喷嚏一下";
-			break;
-		case "Geekpark":
+		}
+		else if( "Geekpark".equals(categoryname)) {
 			link = "jike.html";
 			name = "极客公园";
-			break;
-		case "Whoshipm":
+		}
+		else if( "Whoshipm".equals(categoryname)) {
 			link = "ifan.html";
 			name = "极客范儿";
-			break;
-		default:
-			break;
 		}
+			
 		paramMap.put("categoryLink", link);
 		paramMap.put("categoryName", name);
 	}
