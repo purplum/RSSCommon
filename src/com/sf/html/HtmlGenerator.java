@@ -101,23 +101,23 @@ public class HtmlGenerator {
 		String name = "";
 
 		if( "Tugua".equals(categoryname)) {
-			link = "tugua.html";
+			link = "../../tugua.html";
 			name = "图卦";
 		}
 		else if( "Zhihu".equals(categoryname)) {
-			link = "zhihu.html";
+			link = "../../zhihu.html";
 			name = "知乎精选";
 		}
 		else if( "MacStory".equals(categoryname)) {
-			link = "macstory.html";
+			link = "../../macstory.html";
 			name = "Mac Story";
 		}
 		else if( "Quora".equals(categoryname)) {
-			link = "quora.html";
+			link = "../../quora.html";
 			name = "Quora精选";
 		}
 		else if( "IFan".equals(categoryname)) {
-			link = "ifan.html";
+			link = "../../ifan.html";
 			name = "极客范儿";
 		}
 		else if( "IdeaLife".equals(categoryname)) {
@@ -125,23 +125,23 @@ public class HtmlGenerator {
 			name = "时尚设计";
 		}
 		else if( "Smzdm".equals(categoryname)) {
-			link = "smzdm.html";
+			link = "../../smzdm.html";
 			name = "神马值得买";
 		}
 		else if( "Smashmagz".equals(categoryname)) {
-			link = "fasion.html";
+			link = "../../fasion.html";
 			name = "时尚设计";
 		}
 		else if( "Penti".equals(categoryname)) {
-			link = "penti.html";
+			link = "../../penti.html";
 			name = "喷嚏一下";
 		}
 		else if( "Geekpark".equals(categoryname)) {
-			link = "jike.html";
+			link = "../../jike.html";
 			name = "极客公园";
 		}
 		else if( "Whoshipm".equals(categoryname)) {
-			link = "ifan.html";
+			link = "../../ifan.html";
 			name = "极客范儿";
 		}
 			
