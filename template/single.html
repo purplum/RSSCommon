@@ -123,8 +123,8 @@
               <div class="content_bottom_left">                
                 <div class="single_page_area">
                   <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Technology</a></li>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="${categoryLink}">${categoryName}</a></li>
                     <li class="active">${itemTitle}</li>
                   </ol>
                   <h2 class="post_titile">${itemTitle}</h2>
@@ -132,7 +132,7 @@
                     <div class="post_commentbox">
                       <a href="${itemOrigin}"><i class="fa fa-user"></i>查看原文</a>
                       <span><i class="fa fa-calendar"></i>6:49 AM</span>
-                      <a href="#"><i class="fa fa-tags"></i>Technology</a>
+                      <a href="${categoryLink}"><i class="fa fa-tags"></i>${categoryName}</a>
                     </div>
                     <!-- img class="img-center" src="${itemLogo}" alt="img"-->
                     ${itemcontent}

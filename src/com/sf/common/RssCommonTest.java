@@ -84,7 +84,7 @@ public class RssCommonTest {
 									+ "'", feedid);
 				}
 				else {
-					newlink = generateItemLink(title,piclink,content,description,originlink);
+					newlink = generateItemLink(title,piclink,content,description,originlink, categoryname);
 					if(feedid==PentiFeed&&title.contains("喷嚏图卦")) {
 						insertIntoDB(title, description, item.getPubdate().trim(),
 								newlink, TuguaCategory, "'" + piclink
@@ -113,10 +113,11 @@ public class RssCommonTest {
 		scanCommonRssSources("Zhihu", 2);
 	}
 
-	private String generateItemLink(String title, String logo,String itemcontent,String description,String originurl) {
+	private String generateItemLink(String title, String logo,String itemcontent,
+			String description,String originurl, String categoryname) {
 
 		HtmlGenerator hg = new HtmlGenerator();
-		String htmlname = hg.generateHtml(title, logo, itemcontent, description,originurl);
+		String htmlname = hg.generateHtml(title, logo, itemcontent, description,originurl, categoryname);
 
 		return "http://www.ayinexpress.cn/items/single/" + htmlname;
 	}
